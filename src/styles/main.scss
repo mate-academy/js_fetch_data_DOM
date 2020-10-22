@@ -22,3 +22,34 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.message-warm {
+  position: fixed;
+  margin: 50 auto;
+  box-shadow: 3px 3px red, -1em 0 0.4em #79322c;
+  border-radius: 15px;
+  background-color: rgba(233, 179, 175, 0.6);
+  height: 10%;
+  width: 25%;
+  padding-top: 3%;
+  text-align: center;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+}
+
+.phones-list {
+  position: fixed;
+  background-color: rgba(236, 196, 193, 0.5);
+  width: 50%;
+  height: 600px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+ul {
+  list-style: decimal;
+}
+
+li {
+  margin: 10px;
+}
