@@ -1,11 +1,12 @@
 1. Replace `<your_account>` with your Github username in the link
-    - [DEMO LINK](https://<your_account>.github.io/js_fetch_data_DOM/)
+   - [DEMO LINK](https://<your_account>.github.io/js_fetch_data_DOM/)
 2. Follow [this instructions](https://mate-academy.github.io/layout_task-guideline/)
-    - There are no tests for this task so use `npm run lint` command instead of `npm test`
+   - There are no tests for this task so use `npm run lint` command instead of `npm test`
 
 ### Task: Fetch data
 
 API Urls:
+
 - List URL: https://mate-academy.github.io/phone-catalogue-static/api/phones.json
 - Details URL: https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json
 
