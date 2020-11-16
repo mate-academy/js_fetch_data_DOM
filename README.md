@@ -15,6 +15,6 @@ Your task is create function `getPhones` that should `resolve` with the list of 
 After receiving list of phones get all IDs and fetch all details for these phone ids with function `getPhonesDetails`, which takes array of IDs.
 `getPhonesDetails` should `resolve` with an array of details of each phone in the list or `reject` on any error.
 
-(optional) Combine all data. Make array `phonesWithDetails`.
+Show phone names using the DOM.
 
-Hint: It doesn't matter in what way you choose to notify users about resolved or rejected promises. You can use DOM or `console.log`.
+(optional) Combine all data. Make array `phonesWithDetails`.
