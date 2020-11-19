@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Test', () => {
+describe('Fetch data in DOM', () => {
   beforeEach('Open site', () => {
-    cy.visit('http://localhost:8080/');
+    cy.visit('/');
   });
 
   it('should contain phone name', () => {
@@ -84,5 +84,4 @@ describe('Test', () => {
   it('should contain phone name', () => {
     cy.get('html').contains('Motorola CHARM™ with MOTOBLUR™');
   });
-
 });
