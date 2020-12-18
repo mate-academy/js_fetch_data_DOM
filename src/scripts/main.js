@@ -24,7 +24,7 @@ function showMessage(msg, isResolved) {
   document.querySelector('.message').append(msgElem);
 };
 
-function insertData1(data) {
+function showData(data) {
   const phoneList = document.querySelector('.phone-list');
   const table = document.createElement('table');
   let html = '<tr class="phone-list-row"><th>Name</th>'
@@ -90,7 +90,7 @@ const phoneWithDetails = () => {
 phoneWithDetails()
   .then(data => {
     phonesWithDetails.push(data);
-    insertData1(data);
+    showData(data);
   })
   .catch(err => {
     showMessage('err:' + err, false);
