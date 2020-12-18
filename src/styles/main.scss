@@ -22,3 +22,57 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.phone-list {
+  position: absolute;
+  top: calc(50vh + 85px);
+  left: 0;
+
+  &-table {
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    max-width: 100%;
+  }
+
+  @media (min-width: 1025px) {
+    width: 100%;
+
+    &-table {
+      width: 1100px;
+    }
+  }
+
+  &-row {
+    td,
+    th {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid #d5d5d5;
+      color: #353535;
+    }
+    th {
+      background-color: #c5c5e3;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    td {
+      background-color: lavender;
+      font-size: 14px;
+    }
+  }
+}
+
+.message {
+  position: fixed;
+  top: 10px;
+  right: 30px;
+  text-align: right;
+
+  &-success {
+    color: rgb(80, 115, 0);
+  }
+
+  &-error {
+    color: rgb(235, 0, 70);
+  }
+}
