@@ -3,7 +3,7 @@
 const url
   = `https://mate-academy.github.io/phone-catalogue-static/api/phones.json`;
 const details
-  = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/';
+  = `https://mate-academy.github.io/phone-catalogue-static/api/phones/`;
 
 function getPhones(link) {
   return new Promise((resolve, reject) => {
@@ -20,16 +20,9 @@ function getPhones(link) {
 }
 
 function getPhonesDetails(idArr) {
-  return new Promise((resolve, reject) => {
-    idArr.map((id) => {
-      fetch(`${details}${id}`)
-        .then((res) => res.json())
-        .then((obj) => {
-          resolve(obj);
-        })
-        .catch(reject(new Error('not found')));
-    });
-  });
+  const promises = idArr.map((id) => fetch(`${details}${id}.json`));
+
+  return Promise.all(promises);
 }
 
 const phones = getPhones(url);
@@ -37,15 +30,18 @@ const phones = getPhones(url);
 const phonesIDArr = [];
 const ul = document.createElement('ul');
 
-phones.then((res) => {
-  for (const phone of res) {
-    const li = document.createElement('li');
+phones
+  .then((res) => {
+    for (const phone of res) {
+      const li = document.createElement('li');
 
-    li.innerText = phone.name;
-    ul.append(li);
-    phonesIDArr.push(phone.id);
-  }
-});
+      li.innerText = phone.name;
+      ul.append(li);
+      phonesIDArr.push(phone.id);
+    }
 
-getPhonesDetails(phonesIDArr);
+    return phonesIDArr;
+  })
+  .then((array) => getPhonesDetails(array));
+// .catch((res) => console.log(res));
 document.body.append(ul);
