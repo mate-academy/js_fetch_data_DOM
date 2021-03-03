@@ -43,5 +43,4 @@ phones
     return phonesIDArr;
   })
   .then((array) => getPhonesDetails(array));
-// .catch((res) => console.log(res));
 document.body.append(ul);
