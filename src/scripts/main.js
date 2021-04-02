@@ -5,11 +5,6 @@ const listUrl
 // eslint-disable-next-line
 const detailsUrl = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json';
 
-/* fetch('detailsUrl')
-  .then(response => response.json())
-  .then(data => console.log(data.map(phone => phone.id)))
-  .catch(error => console.log(error)); */
-
 function getPhones(url) {
   return new Promise((resolve, reject) => {
     fetch(url)
