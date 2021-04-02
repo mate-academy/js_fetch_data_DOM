@@ -17,18 +17,18 @@ const getPhones = (endPoint) => {
           ));
         }
 
-        resolve(response.json());
-
-        setTimeout(() => {
-          reject(new Error());
-        }, 5000);
+        return resolve(response.json());
       });
+
+    setTimeout(() => {
+      reject(new Error());
+    }, 5000);
   });
 };
 
 const getPhonesDetails = (listOfPhones) => {
   const newList = listOfPhones.map(phone => phone.id).map(id => {
-    fetch(`${BASE_URL}/phones${id}.json`);
+    fetch(`${BASE_URL}/phones/${id}.json`);
   });
 
   return Promise.all(newList);
@@ -46,6 +46,8 @@ getPhones('/phones.json')
       parentElemnt.append(liElement);
       liElement.append(result[i].name);
     }
+
+    return result;
   })
   .then(getPhonesDetails)
   .catch(error => {
