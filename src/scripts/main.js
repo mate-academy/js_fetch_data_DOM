@@ -2,8 +2,8 @@
 
 const listUrl
   = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
-// eslint-disable-next-line
-const detailsUrl = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json';
+const detailsUrl
+  = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/';
 
 function getPhones(url) {
   return new Promise((resolve, reject) => {
@@ -34,8 +34,6 @@ getPhones(listUrl)
       listItem.textContent = item.name;
       list.append(listItem);
     });
-
-    return listUrl.map(phone => phone.id);
   })
   .then(result => getPhonesDetails(result));
 
