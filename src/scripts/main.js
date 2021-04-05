@@ -1,17 +1,14 @@
 'use strict';
 
-const BASE_URL = 'https://mate-academy.github.io/phone-catalogue-static/api';
+// eslint-disable-next-line max-len
+const BASE_URL = 'https://mate-academy.github.io/phone-catalogue-static/api/phones';
 const options = {
   method: 'GET',
-
-  // headers: {
-  //   'content-type': 'application/json; charset=utf-8',
-  // },
 };
 const body = document.querySelector('body');
 
-const getPhones = (endPoint) => {
-  return fetch(`${BASE_URL}${endPoint}`, options)
+const getPhones = () => {
+  return fetch(`${BASE_URL}.json`, options)
     .then(response => {
       if (!response.ok) {
         return Promise.reject(new Error(
@@ -23,26 +20,26 @@ const getPhones = (endPoint) => {
     });
 };
 
-const getPhonesDetails = (list) => {
-  const newList = list.map(phone => phone.id).map(id => {
-    fetch(`${BASE_URL}/phones/${id}.json`);
+const getPhonesDetails = (phoneID) => {
+  const phones = phoneID.map(phone => phone.id).map(id => {
+    fetch(`${BASE_URL}/${id}.json`);
   });
 
-  return newList;
+  return phones;
 };
 
-const parentElemnt = document.createElement('ul');
+const list = document.createElement('ul');
 
-body.append(parentElemnt);
+body.append(list);
 
 getPhones('/phones.json')
   .then(result => {
-    for (let i = 0; i < result.length; i++) {
-      const liElement = document.createElement('li');
+    result.map(phone => {
+      const newPhone = document.createElement('li');
 
-      parentElemnt.append(liElement);
-      liElement.append(result[i].name);
-    }
+      list.append(newPhone);
+      newPhone.append(phone.name);
+    });
 
     return result;
   })
