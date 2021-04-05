@@ -15,10 +15,10 @@ function getPhones() {
   return new Promise((resolve, reject) => {
     fetch(listUrl)
       .then(response => response.json())
-      .then(listOfPhones => resolve(listOfPhones));
+      .then(phones => resolve(phones));
 
     setTimeout(() => {
-      reject(new Error());
+      reject(new Error('failed data'));
     }, 5000);
   });
 }
