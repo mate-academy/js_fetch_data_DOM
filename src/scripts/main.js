@@ -24,7 +24,7 @@ function getPhones() {
 }
 
 function addPhoneNamesList(phones) {
-  const phonesId = phones.map(phone => {
+  const phonesIds = phones.map(phone => {
     const phoneName = document.createElement('li');
 
     phoneName.innerText = phone.name;
@@ -33,11 +33,11 @@ function addPhoneNamesList(phones) {
     return phone.id;
   });
 
-  return phonesId;
+  return phonesIds;
 }
 
-function getPhonesDetails(idList) {
-  const phoneDetails = idList
+function getPhonesDetails(ids) {
+  const phoneDetails = ids
     .map(id => (fetch(`${detailsUrl}${id}.json`)));
 
   return Promise.all(phoneDetails);
@@ -46,4 +46,4 @@ function getPhonesDetails(idList) {
 getPhones()
   .then(addPhoneNamesList)
   .then(getPhonesDetails)
-  .catch(() => new Error());
+  .catch(() => new Error('failed data'));
