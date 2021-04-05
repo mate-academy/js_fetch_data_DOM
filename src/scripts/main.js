@@ -12,7 +12,7 @@ function getPhones(url) {
       .then(result => resolve(result));
 
     setTimeout(() => {
-      reject(new Error());
+      reject(new Error('Error: data cannot be loaded'));
     }, 5000);
   });
 };
@@ -27,14 +27,14 @@ const list = document.createElement('ul');
 const body = document.querySelector('body');
 
 getPhones(listUrl)
-  .then(items => {
-    items.forEach(item => {
+  .then(phones => {
+    phones.forEach(item => {
       const listItem = document.createElement('li');
 
       listItem.textContent = item.name;
       list.append(listItem);
+
+      body.append(list);
     });
   })
   .then(result => getPhonesDetails(result));
-
-body.append(list);
