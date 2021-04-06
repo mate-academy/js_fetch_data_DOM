@@ -21,11 +21,11 @@ const getPhones = () => {
 };
 
 const getPhonesDetails = (idList) => {
-  const datailList = idList.map(id => {
+  const phoneDetails = idList.map(id => {
     fetch(`${BASE_URL}/${id}.json`);
   });
 
-  return datailList;
+  return phoneDetails;
 };
 
 const list = document.createElement('ul');
@@ -33,18 +33,18 @@ const list = document.createElement('ul');
 body.append(list);
 
 getPhones('/phones.json')
-  .then(result => {
-    result.map(phone => {
+  .then(phones => {
+    phones.map(phone => {
       const newPhone = document.createElement('li');
 
       list.append(newPhone);
       newPhone.append(phone.name);
     });
 
-    return result;
+    return phones;
   })
   .then(phones => phones.map(phone => phone.id))
   .then(getPhonesDetails)
   .catch(error => {
-    alert(error);
+    throw new Error(error);
   });
