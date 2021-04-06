@@ -20,8 +20,8 @@ const getPhones = () => {
     });
 };
 
-const getPhonesDetails = (phoneID) => {
-  const phones = phoneID.map(phone => phone.id).map(id => {
+const getPhonesDetails = (idList) => {
+  const phones = idList.map(phone => phone.id).map(id => {
     fetch(`${BASE_URL}/${id}.json`);
   });
 
