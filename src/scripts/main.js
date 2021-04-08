@@ -22,6 +22,10 @@ function getPhonesWithTimeout() {
   ])
     .then(response => {
       return response.json();
+    })
+    .catch(error => {
+    // eslint-disable-next-line no-console
+      return console.warn(error);
     });
 }
 
@@ -34,8 +38,8 @@ function getPhones() {
     });
 }
 
-function getPhonesDetails(idsList) {
-  const phonesDetailsList = idsList.map(id => {
+function getPhonesDetails(ids) {
+  const phonesDetailsList = ids.map(id => {
     return fetch(
       // eslint-disable-next-line max-len
       `https://mate-academy.github.io/phone-catalogue-static/api/phones/${id}.json`
@@ -51,7 +55,7 @@ function getPhonesDetails(idsList) {
 function displayList(phonesDetailsList) {
   const list = document.createElement('ul');
 
-  phonesDetailsList.map(item => {
+  phonesDetailsList.forEach(item => {
     const li = document.createElement('li');
 
     li.textContent = item.name;
