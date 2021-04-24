@@ -9,7 +9,13 @@ const request = (url) => {
     }, 5000);
 
     fetch(`${BASE_URL}${url}`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          reject(new Error("Response isn't OK"));
+        }
+
+        return response.json();
+      })
       .then(data => resolve(data));
   });
 };
@@ -18,44 +24,21 @@ const getPhones = () => {
   return request('/phones.json');
 };
 
-async function getPhonesDetails(ids) {
-  const result = [];
+const getPhonesDetails = (ids) => {
+  return Promise.all(
+    ids.map(id => request(`/phones/${id}.json`))
+  );
+};
 
-  for (const id of ids) {
-    result.push(await request(`/phones/${id}.json`));
-  }
+getPhones()
+  .then(phones => getPhonesDetails(phones.map(phone => phone.id)))
+  .then(showPhoneNames)
+  .catch(error => alert(`Error: ${error}`));
 
-  return result;
-}
-
-phonesWithDetails().then(showPhonesInfo);
-
-async function phonesWithDetails() {
-  try {
-    const phones = await getPhones();
-    const details = await getPhonesDetails(phones.map(phone => phone.id));
-
-    return phones.map(phone => {
-      const phoneWithDetails = Object.assign({}, phone);
-
-      phoneWithDetails['details'] = details.find(data => data.id === phone.id);
-
-      return phoneWithDetails;
-    });
-  } catch (error) {
-    console.warn('Error: ', error);
-  }
-}
-
-function showPhonesInfo(phones) {
+function showPhoneNames(phones) {
   document.body.insertAdjacentHTML('beforeend', `
     <ul>
-  ${phones.map(phone => {
-    return `<li>
-      <em>${phone.name}</em>
-      <p>Description: ${phone.details.description}</p>
-    </li>`;
-  }).join('')}
+      ${phones.map(phone => `<li>${phone.name}</li>`).join('')}
     </ul>
   `);
 }
