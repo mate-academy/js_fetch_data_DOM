@@ -1,5 +1,5 @@
 1. Replace `<your_account>` with your Github username in the link
-    - [DEMO LINK](https://<your_account>.github.io/js_fetch_data_DOM/)
+    - [DEMO LINK](https://vlad-trundenko.github.io/js_fetch_data_DOM/)
 2. Follow [this instructions](https://mate-academy.github.io/layout_task-guideline/)
     - Run `npm run test` command to test your code;
     - Run `npm run test:only -- -n` to run fast test ignoring linter;
@@ -8,7 +8,7 @@
 ### Task: Fetch data
 
 API Urls:
-- List URL: https://mate-academy.github.io/phone-catalogue-static/api/phones.json
+- List URL: 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json'
 - Details URL: https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json
 
 The main goal of this task is practice of fetching data from API.
