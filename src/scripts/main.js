@@ -1,12 +1,10 @@
 'use strict';
 
 const listURL = `https://mate-academy.github.io/
-phone-catalogue-static/api/phones.json`;
-const detailsURL = `https://mate-academy.github.io/
-phone-catalogue-static/api/phones/:phoneId.json`;
+phone-catalogue-static/api/phones`;
 
-const request = (url) => {
-  return fetch(url)
+const request = (url, id = '.json') => {
+  return fetch(`${url}${id}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status} - ${response.statusText}`);
@@ -17,24 +15,22 @@ const request = (url) => {
 };
 
 const getPhones = () => request(listURL);
-const getPhonesDetails = () => request(detailsURL);
 
 getPhones()
   .then(result => addPhonesList(result))
   .catch(err => alert(err));
 
-getPhonesDetails()
-  .then(result => result)
-  .catch(err => alert(err));
-
-const addPhonesList = (data) => {
+function addPhonesList(data) {
   const div = document.createElement('div');
+
+  div.className = 'phones';
+
   const ul = document.createElement('ul');
 
   div.append(ul);
 
   data.map(phone => ul.insertAdjacentHTML('beforeend', `
-    <li>
+    <li id=${phone.id}>
       ${phone.name}
     </li>
   `));
@@ -44,5 +40,24 @@ const addPhonesList = (data) => {
   div.style.cssText = `
     background-color: black;
     color: white;
+    width: 400px;
   `;
+
+  const phonesId = data.map(phone => phone.id);
+  const phonesWithDetails = [];
+
+  function getPhonesDetails(array) {
+    array.map(item => {
+      request(listURL, '/' + item + '.json')
+        .then(result => {
+          const phoneIdWithDetails = {};
+
+          phoneIdWithDetails[result.id] = result;
+          phonesWithDetails.push(phoneIdWithDetails);
+        })
+        .catch(err => alert(err));
+    });
+  };
+
+  getPhonesDetails(phonesId);
 };
