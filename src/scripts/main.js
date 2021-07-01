@@ -4,7 +4,7 @@ const promise = getPhones(
   'https://mate-academy.github.io/'
   + 'phone-catalogue-static/api/phones.json');
 const phoneList = [];
-const phoneDetailsList = [];
+let requests;
 
 function getPhones(url) {
   return new Promise((resolve, reject) => {
@@ -35,14 +35,14 @@ promise
   .catch(new Error('error!'));
 
 function getPhonesDetails(arrayOfIds) {
-  return new Promise((resolve, reject) => {
-    for (const elem of arrayOfIds) {
-      fetch(
-        `https://mate-academy.github.io/`
-        + `phone-catalogue-static/api/phones/${elem}.json`)
-        .then(response => response.json())
-        .then(phoneDetail => phoneDetailsList.push(phoneDetail))
-        .catch(new Error('error!'));
-    };
+  requests = arrayOfIds.map(id => {
+    return fetch(
+      `https://mate-academy.github.io/`
+      + `phone-catalogue-static/api/phones/${id}.json`)
+      .then(response => response.json());
   });
+
+  Promise.all(requests)
+    .then(phoneDetail => phoneDetail)
+    .catch(new Error('error!'));
 };
