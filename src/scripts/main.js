@@ -3,67 +3,58 @@
 const serverURL = 'https://mate-academy.github.io/'
 + 'phone-catalogue-static/api/';
 const phonesEndpoint = 'phones.json';
-const phones = getPhones();
+let mobiles = [];
 
-phones
-  .then(mobilePhones => {
+getPhones()
+  .then(phones => {
+    const phonesIds = phones.map(phone => phone.id);
+    const requests = phonesIds.map(phoneId => {
+      return fetch(serverURL + `/phones/${phoneId}.json`)
+        .then(response => response.json());
+    });
+
+    mobiles = phones.map(phone => phone);
+
+    return Promise.all(requests);
+  })
+  .then(phonesDetails => {
     const phonesList = document.createElement('ul');
 
-    const phoneIds = mobilePhones.map(phone => {
-      const phoneName = document.createElement('li');
+    phonesDetails.forEach(phoneDetails => {
+      const li = document.createElement('li');
 
-      phoneName.innerText = phone.name;
-      phonesList.append(phoneName);
-
-      return phone.id;
+      li.innerText = phoneDetails.name;
+      phonesList.append(li);
     });
 
     document.body.append(phonesList);
 
-    const phonesDetailsRequest = getPhonesDetails(phoneIds);
+    return phonesDetails;
+  })
+  .then(phonesDetails => {
+    phonesDetails.map(phoneDetails => {
+      const phone = mobiles.find(mobile => mobile.id === phoneDetails.id);
 
-    Promise.all(phonesDetailsRequest)
-      .then(phonesDetails => {
-        const phonesWithDetails
-        = combinePhonesWithDetails(mobilePhones, phonesDetails);
-
-        const combinedList = document.createElement('ul');
-
-        for (const combinedPhone of phonesWithDetails) {
-          const li = document.createElement('li');
-
-          li.innerText = combinedPhone.name;
-          combinedList.append(li);
-        }
-
-        document.body.append(combinedList);
-      })
-      .catch(error => {
-        pushError(error);
-      });
+      return combinePhoneWithDetails(phone, phoneDetails);
+    });
   })
   .catch(error => {
-    pushError(error);
+    const errorMessage = document.createElement('h1');
+
+    errorMessage.innerText = error.message;
+    document.body.append(errorMessage);
   });
 
-function pushError(error) {
-  const errorNotification = document.createElement('h1');
+function getPhones() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error('Your request timed out'));
+    }, 5000);
 
-  errorNotification.innerText = error.message;
-  document.body.append(errorNotification);
-}
-
-function combinePhonesWithDetails(phonesToCombine, phonesDetails) {
-  const phonesWithDetails = [];
-
-  phonesToCombine.forEach(phone => {
-    const phoneDetails = phonesDetails
-      .find(details => details.id === phone.id);
-
-    phonesWithDetails.push(combinePhoneWithDetails(phone, phoneDetails));
+    fetch(serverURL + phonesEndpoint)
+      .then(response => response.json())
+      .then(phones => resolve(phones));
   });
-
-  return phonesWithDetails;
 }
 
 function combinePhoneWithDetails(phone, phoneDetails) {
@@ -86,35 +77,6 @@ function combinePhoneWithDetails(phone, phoneDetails) {
   }
 
   return phoneWithDetails;
-}
-
-function request(url, endpoint) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      reject(new Error('Your request is timed out'));
-    }, 5000);
-
-    fetch(`${url}${endpoint}`)
-      .then(response => {
-        if (!response.ok) {
-          reject(new Error(`${response.status} - ${response.statusText}`));
-        }
-
-        return response.json();
-      })
-      .then(result => resolve(result));
-  });
-}
-
-function getPhones() {
-  return request(serverURL, phonesEndpoint);
-}
-
-function getPhonesDetails(phonesIds) {
-  return phonesIds.map(phoneId => {
-    return fetch(serverURL + `phones/${phoneId}.json`)
-      .then(response => response.json());
-  });
 }
 
 function deepCopy(original) {
