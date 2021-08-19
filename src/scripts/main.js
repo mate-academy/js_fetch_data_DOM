@@ -28,8 +28,6 @@ getPhones().then(result => {
       newList.insertAdjacentHTML('afterbegin', `
       <li>
       PHONE NAME: ${phone.name}
-      <br>
-      PHONE DETAILS: ${phone.id}
       </li>
       `);
     });
