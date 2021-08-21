@@ -15,21 +15,21 @@ function getPhones() {
     .then(response => response.json());
 }
 
-function getPhonesDetails(id) {
+function getPhoneDetails(id) {
   return fetch(`${detailsURL}` + `${id}.json`)
     .then(response => response.json());
 }
 
 getPhones().then(result => {
-  const phonesIds = result.map(phone => phone.id);
+  const phonesIds = result.map(phone => getPhoneDetails(phone.id));
 
-  for (const key of phonesIds) {
-    getPhonesDetails(key).then(phone => {
+  Promise.all([...phonesIds]).then(phone => {
+    phone.forEach(el => {
       newList.insertAdjacentHTML('afterbegin', `
       <li>
-      PHONE NAME: ${phone.name}
+      PHONE NAME: ${el.name}
       </li>
       `);
     });
-  };
+  });
 });
