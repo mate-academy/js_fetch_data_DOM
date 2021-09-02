@@ -31,7 +31,7 @@ getPhones()
         phoneDetails.forEach(item => {
           const phone = document.createElement('li');
 
-          phone.textContent = item.id;
+          phone.textContent = item.name;
           phonesList.append(phone);
         });
       });
