@@ -7,6 +7,8 @@ const phonesDetails = 'https://mate-academy.github.io/'
 
 const ul = document.createElement('ul');
 
+document.body.append(ul);
+
 function getPhones() {
   return fetch(BASE_URL)
     .then(response => response.json())
