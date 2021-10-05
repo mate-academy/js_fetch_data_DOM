@@ -3,14 +3,11 @@
 const body = document.querySelector('body');
 const message = document.createElement('div');
 
-// message.style.top = `30px`;
-// message.style.right = `30px`;
+const BASE_URL
+  = 'https://mate-academy.github.io/phone-catalogue-static/api';
 
-const urlList
-  = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
-
-function getPhones() {
-  return fetch(urlList)
+function getPhones(url) {
+  return fetch(`${BASE_URL}${url}.json`)
     .then((response) => {
       if (!response.ok) {
         return Promise.reject(new Error(`${response.status}`));
@@ -20,13 +17,12 @@ function getPhones() {
     });
 }
 
-function getPhonesDetails(arrId) {
+function getPhonesDetails(arrId, url) {
   return new Promise((resolve, reject) => {
     const phonesDetails = [];
 
     for (const id of arrId) {
-      // eslint-disable-next-line
-      fetch(`https://mate-academy.github.io/phone-catalogue-static/api/phones/${id}.json`)
+      fetch(`${BASE_URL}${url}/${id}.json`)
         .then(respons => respons.json())
         .then(phone => {
           phonesDetails.push(phone);
@@ -42,7 +38,7 @@ function getPhonesDetails(arrId) {
   });
 }
 
-getPhones()
+getPhones('/phones')
   .then((phones) => {
     const phohesIdArr = [];
 
@@ -52,7 +48,7 @@ getPhones()
       }
     }
 
-    getPhonesDetails(phohesIdArr)
+    getPhonesDetails(phohesIdArr, '/phones')
       .then(arr => {
         const list = document.createElement('ol');
 
