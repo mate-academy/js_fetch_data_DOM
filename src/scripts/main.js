@@ -3,8 +3,6 @@
 const body = document.querySelector('body');
 const message = document.createElement('div');
 
-// message.style.top = `30px`;
-// message.style.right = `30px`;
 
 const urlList
   = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
