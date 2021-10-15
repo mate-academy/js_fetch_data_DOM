@@ -1,21 +1,17 @@
 'use strict';
 
+const BASE_URL = 'https://mate-academy.github.io/phone-catalogue-static/api';
 const list = document.createElement('ul');
 
 document.body.append(list);
 
 const request = (
   endPoint = '',
-  dataFormat = '.json',
-  params = { method: 'GET' },
-  baseUrl = 'https://mate-academy.github.io/phone-catalogue-static/api'
 ) => {
-  return fetch(`${baseUrl}${endPoint}${dataFormat}`, params)
+  return fetch(`${BASE_URL}${endPoint}.json`)
     .then(response => {
       if (!response.ok) {
-        setTimeout(() => {
-          return new Error('Error with request');
-        });
+        return new Error('Error with request');
       };
 
       return response.json();
