@@ -103,7 +103,7 @@ const generateDetailsInformer = async () => {
       showPhoneInfo(details, phoneInfo, phoneSelect);
     });
   } catch (error) {
-    console.error(error.message);
+    return 'Proccesed error';
   }
 };
 
