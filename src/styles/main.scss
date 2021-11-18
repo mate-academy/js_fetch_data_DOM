@@ -6,6 +6,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 
   min-height: 100vh;
 }
@@ -21,4 +22,43 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.phone-picker {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  & select {
+    box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid #f1a5cf;
+    border-radius: 4px;
+  
+    background-color: #fff;
+  }
+
+  & button {
+    box-sizing: border-box;
+    border: 2px solid #7ab2e4;
+    border-radius: 4px;
+
+    background-color: aliceblue;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(205, 232, 255);
+    }
+  }
+}
+
+.phone-info {
+  box-sizing: border-box;
+  width: 60%;
+  padding: 30px;
+  border: 3px solid #d8b1ff;
+  border-radius: 21px;
+
+  background-color: #eddbff;
 }
