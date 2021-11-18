@@ -5,7 +5,7 @@ module.exports = {
       "anonymous": "never",
       "named": "never",
       "asyncArrow": "always",
-      'no-console': 'off'
-    }]
-  }
+    }],
+    'no-console': 'off'
+  },
 };
