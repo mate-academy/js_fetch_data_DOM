@@ -7,7 +7,31 @@ const url = `${BASE_URL}.json`;
 const body = document.querySelector('body');
 const list = document.createElement('ul');
 
+list.style.backgroundColor = `#afe125`;
+
+list.innerHTML = `
+  <h3>Phones ID</h3>
+`;
 body.append(list);
+
+const listDetails = document.createElement('ul');
+
+listDetails.style.backgroundColor = `#64fade`;
+
+listDetails.innerHTML = `
+  <h3>Phone names with details<br>
+  (please click on the name to see the description)</h3>
+`;
+body.insertAdjacentElement('afterbegin', listDetails);
+
+const ul = document.querySelectorAll('ul');
+
+[...ul].map(el => {
+  el.style.margin = `8px`;
+  el.style.padding = `0 8px 16px 24px`;
+  el.style.borderRadius = `8px`;
+  el.style.width = `35%`;
+});
 
 function getPhones() {
   return fetch(url)
@@ -47,7 +71,7 @@ getPhones()
         details.map(el => {
           detailArray.push(el);
 
-          const text = `<li>${el.name}</li>`;
+          const text = `<li>${el.id}</li>`;
 
           list.insertAdjacentHTML('beforeend', text);
 
@@ -58,9 +82,32 @@ getPhones()
             }
           });
         });
-        // eslint-disable-next-line no-console
-        console.log(detailArray);
-        // eslint-disable-next-line no-console
-        console.log(phonesWithDetails);
+
+        phonesWithDetails.map(phone => {
+          const nameText = `
+          <li class="tree" style="cursor: pointer">
+            ${phone.name}
+            <ul hidden>${phone.detail.description}</ul>
+          </li>`;
+
+          listDetails.insertAdjacentHTML('beforeend', nameText);
+        });
+
+        const tree = document.querySelectorAll('.tree');
+
+        const hideShow = (el) => {
+          const item = el.target;
+          const element = item.firstElementChild;
+
+          if (element.hidden === false) {
+            element.hidden = true;
+          } else {
+            element.hidden = false;
+          }
+        };
+
+        [...tree].map(elem => {
+          elem.addEventListener('click', hideShow);
+        });
       });
   });
