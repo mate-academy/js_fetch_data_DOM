@@ -22,3 +22,17 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.active {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  padding: 8px;
+  margin: 5px;
+  border: 2px solid rgb(252, 75, 59);
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+}
