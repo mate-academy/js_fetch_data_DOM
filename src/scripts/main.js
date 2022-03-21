@@ -32,6 +32,8 @@ function getPhonesDetails(phonesDataArray) {
         error('Error:', error);
       });
   }
+
+  return phoneDetailsArray;
 }
 
 function makeDom(elementName) {
