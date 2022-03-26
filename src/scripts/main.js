@@ -14,14 +14,6 @@ const table = document.getElementById('listOfPhones');
 const request = (url = '') => {
   return fetch(`${BASE_URL}api/phones${url}.json`)
     .then((response) => {
-      setTimeout(() => {
-        if (!response.ok) {
-          return Promise.reject(
-            new Error(`${response.status} - not found`)
-          );
-        }
-      }, 1000);
-
       return response.json();
     });
 };
@@ -32,6 +24,12 @@ const getPhonesDetails = (phoneUrl) => request(`/${phoneUrl}`);
 
 getPhones()
   .then(data => {
+    if (!data.ok) {
+      setTimeout(() => {
+        return Error(`${data.status} - not found`);
+      }, 5000);
+    }
+
     data.map(phone => {
       getPhonesDetails(phone.id)
         .then(phoneDetails => {
