@@ -26,7 +26,7 @@ const getPhones = () => {
           return Promise.reject(new Error(
             `Content-type is not supported - ${response.status}`
           ));
-        });
+        }, 5000);
       }
 
       return response.json();
