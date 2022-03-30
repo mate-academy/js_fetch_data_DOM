@@ -39,10 +39,6 @@ function logError(error) {
   }, 5000);
 };
 
-getPhones()
-  .then(getPhonesDetails)
-  .catch(logErrorDetails);
-
 function getPhonesDetails(phones) {
   for (const key of phones) {
     const getDetails = () => {
@@ -56,9 +52,14 @@ function getPhonesDetails(phones) {
         });
     };
 
-    getDetails();
+    getPhones()
+      .then(getDetails)
+      .catch(logErrorDetails);
   };
 };
+
+getPhones()
+  .then(getPhonesDetails);
 
 function logErrorDetails(error) {
   console.warn(error);
