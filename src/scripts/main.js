@@ -31,9 +31,21 @@ function printList(value) {
     ul.append(li);
   };
   body.append(ul);
+};
 
-  for (const key of value) {
-    const getPhonesDetails = () => {
+function logError(error) {
+  setTimeout(() => {
+    console.warn(error);
+  }, 5000);
+};
+
+getPhones()
+  .then(getPhonesDetails)
+  .catch(logErrorDetails);
+
+function getPhonesDetails(phones) {
+  for (const key of phones) {
+    const getDetails = () => {
       return fetch(`${url.slice(0, -5)}/${key.id}.json`)
         .then(response => {
           if (!response.ok) {
@@ -44,20 +56,8 @@ function printList(value) {
         });
     };
 
-    getPhonesDetails()
-      .then(printDetails)
-      .catch(logErrorDetails);
+    getDetails();
   };
-};
-
-function logError(error) {
-  setTimeout(() => {
-    console.warn(error);
-  }, 5000);
-};
-
-function printDetails(details) {
-  console.log(details);
 };
 
 function logErrorDetails(error) {
