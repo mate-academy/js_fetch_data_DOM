@@ -16,7 +16,8 @@ const convertData = data => {
     return data;
   }
 
-  return Object.entries(data).map(([key, value]) => ` <b>${key.toUpperCase(key)}</b> - ${value}`);
+  return Object.entries(data)
+    .map(([key, value]) => ` <b>${key.toUpperCase(key)}</b> - ${value}`);
 };
 
 const getPhones = url =>
