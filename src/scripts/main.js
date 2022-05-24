@@ -1,8 +1,8 @@
 'use strict';
 
-const BaseUrl
+const BASE_URL
 = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
-const phoneDetails
+const DETAILS_URL
 = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/';
 
 const body = document.body;
@@ -11,7 +11,7 @@ const ul = document.createElement('ul');
 body.append(ul);
 
 function getPhones() {
-  return fetch(BaseUrl)
+  return fetch(BASE_URL)
     .then(response => {
       if (!response.ok) {
         return setTimeout(() => {
@@ -25,7 +25,7 @@ function getPhones() {
 
 function getPhonesDetails(phoneIDs) {
   phoneIDs.forEach(phoneid => {
-    fetch(`${phoneDetails}${phoneid}.json`)
+    fetch(`${DETAILS_URL}${phoneid}.json`)
       .then(response => {
         if (!response.ok) {
           throw Error(`${response.status} - ${response.status.text}`);
