@@ -9,11 +9,9 @@ const request = (url) => {
     .then(response => {
       return response.ok
         ? response.json()
-        : setTimeout(() =>
-          Promise.reject(
-            new Error(`${response.status} - ${response.statusText}`),
-          ),
-        5000);
+        : setTimeout(() => {
+          throw new Error(`${response.status} - ${response.statusText}`);
+        }, 5000);
     });
 };
 
