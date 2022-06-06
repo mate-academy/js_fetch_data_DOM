@@ -4,7 +4,7 @@ const list = document.querySelector('.phones-list');
 const phonesWithDetails = [];
 let allIds;
 const endpointList = 'phones.json';
-const urlList = 'https://mate-academy.github.io/phone-catalogue-static/api/l';
+const urlList = 'https://mate-academy.github.io/phone-catalogue-static/api/';
 
 const request = (url) => {
   return fetch(url)
