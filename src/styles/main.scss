@@ -10,15 +10,14 @@ body {
   min-height: 100vh;
 }
 
-.logo {
+.phone-item {
+  margin: 5px;
+}
+
+.title {
   text-transform: uppercase;
   background-color: #fc4b3b;
+  padding: 5px;
   color: white;
   border-radius: 16px;
-  user-select: none;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
