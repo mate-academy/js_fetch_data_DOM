@@ -3,7 +3,7 @@
 // eslint-disable-next-line max-len
 const url = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 // eslint-disable-next-line max-len
-const detailsUrl = '/:https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json.';
+const detailsUrl = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/';
 
 const getPhones = () => {
   return fetch(url)
@@ -19,14 +19,33 @@ const getPhones = () => {
     });
 };
 
-const getPhonesDetails = (arr) => {
-  return arr.map(phone =>
-    fetch(`${detailsUrl}${phone.id}.json`));
+const getPhonesDetails = (arrId) => {
+  return Promise.all(arrId.map(id =>
+    fetch(`${detailsUrl}${id}.json`)));
 };
 
 getPhones()
-  .then(phones => getPhonesDetails(phones))
+  .then(phones => {
+    const ids = phones.map(p => p.id);
+
+    return getPhonesDetails(ids);
+  })
+  .then(myPhones => Promise.all(myPhones.map(res => res.json())))
+  .then(res => show(res))
   .catch(error => {
     // eslint-disable-next-line no-console
     console.warn(error);
   });
+
+function show(phones) {
+  const list = document.createElement('table');
+
+  for (const phone of phones) {
+    list.insertAdjacentHTML('beforeend', `<tr> 
+         <td>${phone.name} </td>        
+         </tr>`
+    );
+  }
+
+  document.body.appendChild(list);
+}
