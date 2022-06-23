@@ -37,12 +37,12 @@ getPhones()
     console.warn(error);
   });
 
-function show(phones) {
+function show(ids) {
   const list = document.createElement('table');
 
-  for (const phone of phones) {
+  for (const id of ids) {
     list.insertAdjacentHTML('beforeend', `<tr> 
-         <td>${phone.name} </td>        
+         <td>${id.name} </td>        
          </tr>`
     );
   }
