@@ -13,11 +13,11 @@ root.append(list);
 const request = (url, time = 0) => {
   return fetch(url)
     .then(response => {
-      if (!response.ok) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (!response.ok) {
           throw new Error(`${response.status} - ${response.statusText}`);
-        }, time);
-      }
+        }
+      }, time);
 
       return response.json();
     });
