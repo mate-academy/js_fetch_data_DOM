@@ -9,14 +9,12 @@ function getPhones(promise) {
   promise.then(response => {
     if (!response.ok) {
       setTimeout(() => {
-        getPhonesDetails(null);
-
-        // return Promise.reject(`can't load`); Линтер почему-то не пропускает
+        return Promise.reject(new Error(`can't load`));
       }, 5000);
     }
 
     if (!response.headers.get('content-type').includes('application/json')) {
-    // return Promise.reject('application is not supported'); то же самое
+      return Promise.reject(new Error('application is not supported'));
     }
   });
 
@@ -25,16 +23,11 @@ function getPhones(promise) {
       getPhonesDetails(phones);
 
       return phones;
-    });
-
-  // .catch(error => console.warn(error)); Линтер почему-то не пропускает
+    })
+    .catch(error => alert(error));
 }
 
 function getPhonesDetails(phones) {
-  if (phones === null) {
-    // return Promise.reject('0 phones'); Линтер почему-то не пропускает
-  }
-
   const phonesWithDetails = [];
   const phonesName = [];
 
@@ -42,6 +35,10 @@ function getPhonesDetails(phones) {
     phonesWithDetails.push(phone);
     phonesName.push(phone.name);
   });
+
+  if (phonesName.length === 0) {
+    return Promise.reject(new Error('0 phones'));
+  }
 
   createList(phonesName);
 
