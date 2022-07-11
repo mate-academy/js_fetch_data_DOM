@@ -1,14 +1,18 @@
 'use strict';
 
+const BASE_URL = 'https://mate-academy.github.io/phone-catalogue-static/api';
+const ENDPOINTS = {
+  phones: '/phones.json',
+  phoneById: id => `/phones/${id}.json`,
+};
+
 function request(url) {
   return fetch(url)
-    .then(response => Promise.resolve(response.json()))
-    .catch(error => Promise.reject(error));
+    .then(response => Promise.resolve(response.json()));
 }
 
 function getPhones() {
-  return request(
-    'https://mate-academy.github.io/phone-catalogue-static/api/phones.json');
+  return request(`${BASE_URL}${ENDPOINTS.phones}`);
 }
 
 function getIds(phones) {
@@ -22,22 +26,18 @@ function getIds(phones) {
 }
 
 function getPhonesDetails(ids) {
-  const result = [];
-
-  for (const id of ids) {
-    result.push(request(
-      `https://mate-academy.github.io/phone-catalogue-static/api/phones/${
-        id}.json`));
-  }
-
-  return Promise.all(result);
+  return Promise.all(ids.map(id => {
+    return request(`${BASE_URL}${ENDPOINTS.phoneById(id)}`);
+  }));
 }
 
 function showNames(phones) {
   const list = document.createElement('ul');
 
-  phones.forEach(phone =>
-    list.insertAdjacentHTML('beforeend', `<li>${phone.name}</li>`));
+  phones.forEach(phone => {
+    list.insertAdjacentHTML('beforeend', `<li>${phone.name}</li>`);
+  });
+
   document.querySelector('body').prepend(list);
 }
 
@@ -47,10 +47,8 @@ getPhones()
 
     getPhonesDetails(getIds(phones))
       .then(response => {
-        const phonesWithDetails = [];
-
-        for (let i = 0; i < phones.length; ++i) {
-          phonesWithDetails.push(Object.assign(phones[i], response[i]));
-        }
+      // const phonesWithDetails = phones.reduce((accumulator, current, i) => {
+        //   return [...accumulator, Object.assign(current, response[i])];
+        // }, []);
       });
   });
