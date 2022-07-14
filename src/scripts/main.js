@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable-next-line */
 const url = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 
 const request = () => {
@@ -37,12 +38,5 @@ const getPhonesDetails = () => {
     });
 };
 
-function printV(value) {
-  console.log(value);
-}
-
-getPhones()
-  .then(printV);
-
-getPhonesDetails()
-  .then(printV);
+getPhones();
+getPhonesDetails();
