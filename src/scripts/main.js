@@ -33,8 +33,7 @@ const getPhonesDetails = (idSet) => {
   idSet.forEach(phoneId => request(`/phones/${phoneId}.json`)
     .then(item => phonesList.insertAdjacentHTML('afterbegin', `
       <li>${item.name}</li>
-    `))
-  );
+    `)));
 };
 
 const phonesWithDetails = () => {
@@ -45,8 +44,7 @@ const phonesWithDetails = () => {
       const allPhonesId = phones.map(phone => phone.id);
 
       allPhonesId.forEach(phoneId => request(`/phones/${phoneId}.json`)
-        .then(item => phonesWithDetailsList.push(item))
-      );
+        .then(item => phonesWithDetailsList.push(item)));
     });
 
   return phonesWithDetailsList;
