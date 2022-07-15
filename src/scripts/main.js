@@ -2,7 +2,7 @@
 
 const BASE_URL = `https://mate-academy.github.io/phone-catalogue-static/api`;
 const ENDPOINTS = {
-  pnones: '/phones.json',
+  phones: '/phones.json',
   phonesId: (Id) => `/phones/${Id}.json`,
 };
 
@@ -12,7 +12,7 @@ const request = (url) => {
     .catch(error => setTimeout(() => Promise.reject(error), 5000));
 };
 
-const getPhones = () => request(ENDPOINTS.pnones);
+const getPhones = () => request(ENDPOINTS.phones);
 const getPhonesDetails = (arrId) => {
   return Promise.all(arrId.map(id => request(ENDPOINTS.phonesId(id))));
 };
