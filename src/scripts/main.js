@@ -26,7 +26,6 @@ const getPhones = () => {
       const allPhonesId = phones.map(phone => phone.id);
 
       getPhonesDetails(allPhonesId);
-      phonesWithDetails(allPhonesId);
     });
 };
 
@@ -38,14 +37,20 @@ const getPhonesDetails = (idSet) => {
   );
 };
 
-const phonesWithDetails = (idSet) => {
+const phonesWithDetails = () => {
   const phonesWithDetailsList = [];
 
-  idSet.forEach(phoneId => request(`/phones/${phoneId}.json`)
-    .then(item => phonesWithDetailsList.push(item))
-  );
+  request('/phones.json')
+    .then(phones => {
+      const allPhonesId = phones.map(phone => phone.id);
+
+      allPhonesId.forEach(phoneId => request(`/phones/${phoneId}.json`)
+        .then(item => phonesWithDetailsList.push(item))
+      );
+    });
 
   return phonesWithDetailsList;
 };
 
 getPhones();
+phonesWithDetails();
