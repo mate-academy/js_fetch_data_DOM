@@ -41,6 +41,8 @@ function getPhonesDetails(listOfIds) {
       })
       .catch(error => new Error(error));
   });
+
+  return phonesWithDetails;
 }
 
 getPhones()
