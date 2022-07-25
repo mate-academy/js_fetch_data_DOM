@@ -1,6 +1,6 @@
 'use strict';
 
-const { endPoints, request } = require('api');
+const { endPoints, request } = require('./api');
 const list = document.createElement('ul');
 
 function getPhonesDetails(ids) {
@@ -28,3 +28,4 @@ function getPhones() {
 }
 
 getPhones();
+

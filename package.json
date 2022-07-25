@@ -44,5 +44,7 @@
   "mateAcademy": {
     "projectType": "layoutDOM"
   },
-  "dependencies": {}
+  "dependencies": {
+    "api": "^4.5.1"
+  }
 }
