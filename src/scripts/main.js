@@ -1,12 +1,12 @@
 'use strict';
 
-const BASE_URL = 'https://mate-academy.github.io/phone-catalogue-static/api';
-const list = document.createElement('ul');
+const BASE_URL = 'https://mate-academy.github.io/'
+  + 'phone-catalogue-static/api/phones';
 
-document.body.append(list);
+let phonesWithDetails = [];
 
-const request = (url) => {
-  return fetch(`${BASE_URL}${url}`)
+const request = (url = '') => {
+  return fetch(`${BASE_URL}${url}.json`)
     .then(response => {
       if (!response.ok) {
         setTimeout(() => {
@@ -20,16 +20,21 @@ const request = (url) => {
     });
 };
 
-const getPhones = () => request('/phones.json');
+const getPhones = () => request();
 
 function getPhonesDetails(arr) {
-  for (const IDs of arr) {
-    const listItem = document.createElement('li');
+  return Promise.all(arr.map(phone => request(`/${phone.id}`)))
+    .then(result => {
+      result.forEach(el => phonesWithDetails.push(el));
 
-    listItem.innerText = IDs.name;
-
-    list.append(listItem);
-  }
+      document.body.insertAdjacentHTML('afterbegin',
+        `
+     <ul>
+     ${result.map(phone => `<li>${phone.name}</li>`).join('')}
+     </ul>
+       `
+      );
+    });
 }
 
 getPhones()
