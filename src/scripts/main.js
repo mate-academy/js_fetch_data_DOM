@@ -5,8 +5,8 @@ const list = document.createElement('ul');
 const BASE_URL
   = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 
-const request = () => {
-  return fetch(`${BASE_URL}`)
+const request = (url) => {
+  return fetch(`${url}`)
     .then(response => {
       if (!response.ok) {
         setTimeout(() => {
@@ -20,10 +20,10 @@ const request = () => {
     });
 };
 
-const getPhones = () => request();
+const getPhones = () => request(BASE_URL);
 
 const getPhonesDetails = () => {
-  request()
+  getPhones()
     .then(result => {
       result.forEach(item => {
         const listItem = document.createElement('li');
@@ -36,5 +36,4 @@ const getPhonesDetails = () => {
   body.append(list);
 };
 
-getPhones();
 getPhonesDetails();
