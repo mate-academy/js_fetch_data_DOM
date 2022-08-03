@@ -1,7 +1,5 @@
 'use strict';
 
-const ul = document.createElement('ul');
-
 const listURL = 'https://mate-academy.github.io/'
 + 'phone-catalogue-static/api/phones.json';
 
@@ -23,6 +21,7 @@ function getPhones(url) {
 
 function getPhonesDatails(array) {
   const phonesDatails = [];
+  const ul = document.createElement('ul');
 
   for (const item of array) {
     request(`https://mate-academy.github.io/`
