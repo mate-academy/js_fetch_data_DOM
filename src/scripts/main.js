@@ -3,40 +3,41 @@
 const urlList
  = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 
-const ul = document.createElement('ul');
+const ulList = document.createElement('ul');
+const body = document.querySelector('body');
 
-document.body.append(ul);
+body.append(ulList);
 
 const request = (url) => {
-  return fetch(url)
+  return fetch(`${urlList}${url}`)
     .then(response => {
-      return response.ok
-        ? response.json()
-        : setTimeout(() => {
-          throw new Error('Something wrong');
-        }, 5000);
+      setTimeout(() => {
+        if (!response.ok) {
+          return `${response.status} - ${response.statusText}`;
+        }
+      }, 5000);
+
+      return response.json();
     });
 };
 
-const getPhones = () => request(`${urlList}.json`)
-  .then(result => {
-    const idxs = result.map(phone => phone.id);
+const getPhones = () => {
+  request('/phones.json')
+    .then(data => {
+      const phoneId = data.map(phone => phone.id);
 
-    getPhonesDetails(idxs);
-  });
+      getPhonesDetails(phoneId);
+    });
+};
 
-const getPhonesDetails = (arrayIds) => {
-  arrayIds.forEach(id => request(`${urlList}/${id}.json`)
-    .then(data => ul.insertAdjacentHTML('beforeend', `
-      <li>Name: ${data.name}
-        <ul>
-          <li>${data.display.screenResolution}</li>
-          <li>${data.android.os}</li>
-          <li>${data.storage.ram}</li>
-        </ul>
-      </li>
-    `))
-  );
+const getPhonesDetails = (getPhone) => {
+  getPhone.forEach(phoneId => request(`phones/${phoneId}.json`)
+    .then(item => ulList.insertAdjacentHTML('afterbegin',
+      `
+        <li>
+          ${item.name}  
+        </li>
+      `)));
 };
 
 getPhones();
