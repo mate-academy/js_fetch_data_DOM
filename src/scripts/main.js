@@ -8,19 +8,10 @@ const phonesId = document.querySelector('#phones');
 const request = url => {
   return fetch(url)
     .then(response => {
-      if (!response.ok) {
-        return Promise.reject(
-          new Error(`${response.status} - ${response.statusText}`)
-        );
-      }
-
-      if (!response.headers.get('content-type').includes('application/json')) {
-        return Promise.reject(
-          new Error('Content-type is not supported')
-        );
-      }
-
-      return response.json();
+      return !response.ok
+        ? setTimeout(Promise.reject(
+          new Error(`${response.status} - ${response.statusText}`)), 5000)
+        : response.json();
     });
 };
 
@@ -50,8 +41,7 @@ const getPhones = () => {
       const ids = phonesData.map(key => key.id);
 
       getPhonesDetails(ids);
-    })
-    .catch(err => setTimeout(err, 5000));
+    });
 };
 
 getPhones();
