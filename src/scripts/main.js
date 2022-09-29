@@ -1,48 +1,50 @@
 'use strict';
 
-/* eslint-disable */
+const BASE_URL
+= 'https://mate-academy.github.io/phone-catalogue-static/api/phones';
 
-const ListURL = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
+const phoneList = document.querySelector('.phone_list');
 
-const detailsURL = 'https://mate-academy.github.io/phone-catalogue-static/api/phones/:phoneId.json';
+getPhones(`${BASE_URL}.json`)
+  .then(phones => {
+    const idArr = phones.map(phone => phone.id);
 
-/* eslint-enable */
+    getPhoneDetails(idArr);
+  })
+  .catch(error => setTimeout(() => new Error(error), 5000));
 
-renderPhones();
+function getPhones(url) {
+  return request(url);
+}
 
-function renderPhones() {
-  const phoneListDOM = document.querySelector('.phone_list');
-
-  getPhones(ListURL)
-    .then(phones => {
-      const phoneNames = phones.map(phone => phone.name);
-
-      phoneNames.forEach(phoneName => {
+function getPhoneDetails(phoneIds) {
+  phoneIds.forEach(phoneId => {
+    request(`${BASE_URL}/${phoneId}.json`)
+      .then(phoneDetail => {
         const li = document.createElement('li');
 
-        li.innerText = phoneName;
-        phoneListDOM.appendChild(li);
-      });
-    });
+        li.innerText = phoneDetail.name;
+        phoneList.appendChild(li);
+      })
+      .catch((error) => new Error(error));
+  });
 }
 
 function request(url) {
   return fetch(url)
     .then(response => {
       if (!response.ok) {
-        throw Error();
+        return Promise.reject(
+          Error(`Error: ${response.status} - ${response.statusText}`)
+        );
+      }
+
+      if (!response.headers.get('content-type').includes('application/json')) {
+        return Promise.reject(
+          Error('Error: Content type is not supported!')
+        );
       }
 
       return response.json();
     });
 }
-
-function getPhones(url) {
-  return request(url);
-}
-
-/* function getPhoneDetails (url) {
-  return request(url);
-} */
-
-// getPhoneDetails(detailsBaseURL + 'motorola-xoom-with-wi-fi' + '.json');
