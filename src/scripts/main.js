@@ -11,10 +11,16 @@ getPhones(`${BASE_URL}.json`)
 
     getPhoneDetails(idArr);
   })
-  .catch(error => setTimeout(() => new Error(error), 5000));
+  .catch(error => new Error(error));
 
 function getPhones(url) {
-  return request(url);
+  const promise = new Promise((resolve, reject) => {
+    request(url)
+      .then(res => resolve(res))
+      .catch(error => setTimeout(() => reject(new Error(error)), 5000));
+  });
+
+  return promise;
 }
 
 function getPhoneDetails(phoneIds) {
