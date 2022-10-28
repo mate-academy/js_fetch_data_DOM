@@ -3,13 +3,6 @@
 const url
 = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 
-/* const getPhones
-  = fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    }); */
-
 const controller = new AbortController();
 const timeoutId = setTimeout(() => controller.abort(), 5000);
 
