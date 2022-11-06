@@ -1,41 +1,31 @@
 'use strict';
 
-const url
-= 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
+// eslint-disable-next-line
+const url = 'https://mate-academy.github.io/phone-catalogue-static/api/phones.json';
 
-const controller = new AbortController();
-const timeoutId = setTimeout(() => controller.abort(), 5000);
+const getPhones = () => {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then(response => resolve(response.json()));
 
-const getPhones
-  = fetch(url, { signal: controller.signal })
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    });
-
-clearTimeout(timeoutId);
-
-let html = '';
+    setTimeout(() => {
+      reject(new Error('Something went wrong'));
+    }, 5000);
+  });
+};
 
 function getPhonesDetails() {
-  try {
-    getPhones.then((data) => {
-      data.forEach(x => {
-        const htmlSegment
-        = `<div class="phoneName">
-          <p>${x.name}</p>
-        </div>`;
+  const container = document.querySelector('.container');
 
-        html += htmlSegment;
-      });
+  getPhones().then((data) => {
+    data.forEach(phone => {
+      const paragraph = document.createElement('p');
 
-      const container = document.querySelector('.container');
-
-      container.innerHTML = html;
+      paragraph.append(`${phone.name}`);
+      container.appendChild(paragraph);
     });
-  } catch (error) {
-    throw error;
-  }
+  })
+    .catch();
 }
 
 getPhonesDetails();
