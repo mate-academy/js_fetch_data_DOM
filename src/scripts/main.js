@@ -61,9 +61,9 @@ const getPhonesDetails = (phones) => {
   return result;
 };
 
-const startTime = Date.now();
-
 const resolve = () => {
+  const startTime = Date.now();
+
   getPhones()
     .then(getPhonesDetails)
     .catch(err => {
